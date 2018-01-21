@@ -12,7 +12,7 @@
 */
 
 Route::group(['middleware'=>'guest'],function(){
-    Route::get('/','SessionsController@login'); 
+    Route::get('/','SessionsController@login')->name('sessons.login'); 
 
     Route::get('login','SessionsController@login')->name('sessions.login');
     Route::post('login','SessionsController@store');
@@ -23,5 +23,5 @@ Route::group(['middleware'=>'guest'],function(){
 
 Route::group(['middleware'=>'auth'],function(){
     Route::get('logout','SessionsController@logout')->name('sessions.logout');
-    Route::get('/','DashboardController@dashboard')->name('dashboard');
+    Route::get('dashboard','DashboardController@dashboard')->name('dashboard');
 });
