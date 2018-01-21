@@ -13,6 +13,7 @@
 
 Route::group(['middleware'=>'guest'],function(){
     Route::get('/','SessionsController@login')->name('sessons.login'); 
+    Route::post('/','SessionsController@login')->name('sessons.login'); 
 
     Route::get('login','SessionsController@login')->name('sessions.login');
     Route::post('login','SessionsController@store');
