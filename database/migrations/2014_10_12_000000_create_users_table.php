@@ -15,11 +15,12 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('role_id');
             $table->string('firstname');
             $table->string('lastname')->nullable();
             $table->string('email')->unique();
             $table->boolean('email_verified')->default(0);
-            $table->string('phone')->unique();
+            $table->biginteger('phone')->unique()->index()->nullable();
             $table->boolean('phone_verified')->default(0);
             $table->string('password');
             $table->enum('subscription_type', ['trial','expired', 'paid'])->default('trial');

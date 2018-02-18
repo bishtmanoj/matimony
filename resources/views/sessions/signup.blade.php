@@ -45,8 +45,8 @@
                 <label for="password-confirmation">Confirm Password</label>
                 <input value="{{ old('password_confirmation') }}" type="password" name="password_confirmation" class="form-control" id="password-confirmation" placeholder="Confirm Password" required>
                 @if ($errors->has('password_confirmation'))
-            <div class="text text-danger">{{ $errors->first('password_confirmation') }}</div>
-            @endif
+                    <div class="text text-danger">{{ $errors->first('password_confirmation') }}</div>
+                @endif
             </div>
            
             <button type="submit" class="btn btn-primary">Submit</button>

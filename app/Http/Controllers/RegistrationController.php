@@ -12,7 +12,7 @@ class RegistrationController extends Controller
     }
     public function store(Request $request){
 
-        $this->validate($request,[
+        $request->validate([
             'firstname' => 'required|alpha',
             'phone' => 'required|digits:10|unique:users',
             'email' => 'required|email|unique:users',
@@ -29,6 +29,6 @@ class RegistrationController extends Controller
         ]);
 
         $this->setFlash('success','Your account has been created, please login to continue');
-        return redirect()->route('sessions.login');
+        return redirect()->route('login');
     }
 }

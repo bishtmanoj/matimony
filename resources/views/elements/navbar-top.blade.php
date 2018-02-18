@@ -1,32 +1,24 @@
-<!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-  <div class="container">
-    <a class="navbar-brand" href="#">Start Bootstrap</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive"
-      aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarResponsive">
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="{{ url('/') }}">Home
-            <span class="sr-only">(current)</span>
-          </a>
-        </li>
-     
-        @if(!Auth::check())
-        <li class="nav-item">
-          <a class="nav-link" href="{{ route('sessions.login') }}">Sign In</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{{ route('sessions.signup') }}">Sign Up</a>
-        </li>
-        @else
-        <li class="nav-item">
-          <a class="nav-link" href="{{ route('sessions.logout') }}">Logout</a>
-        </li>
-        @endif
-      </ul>
-    </div>
-  </div>
+<nav class="blog-nav navbar-collapse collapse">
+  <ul class="nav navbar-nav">
+    <li>
+      <a class="blog-nav-item active" href="{{ url('/') }}">Home</a>
+    </li>
+  </ul>
+  <ul class="nav navbar-nav navbar-right">
+    @if(!Auth::check())
+    <li>
+      <a class="blog-nav-item" href="{{ route('login') }}">Sign In</a>
+    </li>
+    <li>
+      <a class="blog-nav-item" href="{{ route('signup') }}">Sign Up</a>
+    </li>
+    @else
+    <li>
+      <a class="blog-nav-item" href="{{ route('profile') }}">Profile</a>
+    </li>
+    <li>
+      <a class="blog-nav-item" href="{{ route('logout') }}">Logout</a>
+    </li>
+    @endif
+  </ul>
 </nav>
