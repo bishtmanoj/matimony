@@ -22,5 +22,9 @@
 <th>Member Since</th>
 <td>{{ $user->created_at->toFormattedDateString() }}
 </tr>
+<tr class="hide">
+<th>Address</th>
+<td>{{ $address }}</td>
+</tr>
 @endcomponent
 @endcomponent

@@ -38,11 +38,18 @@
       <h1 class="blog-title"></h1>
       <p class="lead blog-description"></p>
     </div>
-    @include('errors.flash')
+    
     <div class="row">
       <div class="blog-main">
         <div class="col-sm-12">
-
+        @include('errors.flash')
+        @if(!request()->user()->email_verified)
+        @component('components.alert',['class' => 'danger'])
+        Verify email address
+        @slot('anchorLink','#')
+        @slot('anchorText','Verify now')
+        @endcomponent
+        @endif
           @yield('content')
         </div>
       </div>

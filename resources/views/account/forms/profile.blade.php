@@ -32,6 +32,29 @@
             <div class="text text-danger">{{ $errors->first('email') }}</div>
             @endif
             </div>
+            <?php /*
+            <div class="form-group {{ $errors->has('street')?'has-error':'' }}">
+                <label for="street">Street</label>
+                <input value="{{ old('street')??$user->street }}" type="street" name="street" class="form-control" id="street" aria-describedby="streetHelp" placeholder="Enter street" required>
+                @if ($errors->has('street'))
+            <div class="text text-danger">{{ $errors->first('street') }}</div>
+            @endif
+            </div>
+            
+            <div class="form-group {{ $errors->has('pincode')?'has-error':'' }}">
+                <label for="street">Pin Code</label>
+                <input value="{{ old('pincode')??$user->pincode }}" type="pincode" name="pincode" class="form-control" id="pincode" aria-describedby="pincodeHelp" placeholder="Enter pincode" required>
+                @if ($errors->has('pincode'))
+            <div class="text text-danger">{{ $errors->first('pincode') }}</div>
+            @endif
+            </div>
+            <div class="form-group {{ $errors->has('state')?'has-error':'' }}">
+                <label for="street">State</label>
+                <input value="{{ old('state')??$user->state }}" type="state" name="state" class="form-control" id="state" aria-describedby="stateHelp" placeholder="Enter state" required>
+                @if ($errors->has('state'))
+            <div class="text text-danger">{{ $errors->first('state') }}</div>
+            @endif
+            </div>*/ ?>
             <button type="submit" class="btn btn-primary">Update Profile</button>
         </form>
     </div>

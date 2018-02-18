@@ -24,9 +24,5 @@
 <th>Manglik</th>
 <td>{{ $user->user_meta('manglik','name',true)??'N/A' }}</td>
 </tr>
-<tr class="hide">
-<th>Address</th>
-<td>{{ $user->user_meta('education','name',true)??'N/A' }}</td>
-</tr>
 @endcomponent
 @endcomponent

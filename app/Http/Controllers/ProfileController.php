@@ -12,8 +12,8 @@ class ProfileController extends Controller
     public function index(){
 
         $user = Auth::user();
-        
-        return view('account.main',compact('user'));
+        $address = $user->user_meta('address');
+        return view('account.main',compact('user','address'));
 
     }
 
@@ -28,7 +28,6 @@ class ProfileController extends Controller
            $data['rows'] = [
                 ['key'=> 'education', 'title' => 'Education', 'content' => Education::all()],
                 ['key'=>'caste','title' => 'Caste', 'content' => Caste::all()],
-                //['key'=> 'address', 'title' => 'Address', 'content' => Address::all()],
                 ['key'=>'marital_status','title' => 'Martial Status', 'content' => MaritalStatus::all()],
                 ['key'=>'religion','title' => 'Religion', 'content' => Religion::all()],
                 ['key'=>'manglik', 'title' => 'Manglik', 'content' => Manglik::all()],
@@ -75,16 +74,6 @@ class ProfileController extends Controller
                 else
                     $user->meta()->create($userMeta);
             endforeach;
-        
-            /*
-            if($education = $user->user_meta($type)){
-                $education->fill([
-                    ['meta_id' => $request->get('education'),'meta_key' => $type],
-                    ['meta_id' => $request->get('education'),'meta_key' => $type]
-                    ])->save();
-                }else {
-                    $user->meta()->create(['meta_id' => $request->get('education'),'meta_key' => $type]);
-                }*/
                 break;
             case 'profile':
             $request->validate([
