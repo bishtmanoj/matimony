@@ -43,7 +43,7 @@
       <div class="blog-main">
         <div class="col-sm-12">
         @include('errors.flash')
-        @if(!request()->user()->email_verified)
+        @if(request()->user() && !request()->user()->email_verified)
         @component('components.alert',['class' => 'danger'])
         Verify email address
         @slot('anchorLink','#')
