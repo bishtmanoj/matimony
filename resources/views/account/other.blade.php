@@ -9,23 +9,23 @@
 <td>{{ $user->user_meta('education','name',true)??'N/A' }}</td>
 </tr>
 <tr>
-<th>Education</th>
-<td>{{ $user->user_meta('education','name',true)??'N/A' }}</td>
+<th>Caste</th>
+<td>{{ $user->user_meta('caste','name',true)??'N/A' }}</td>
 </tr>
 <tr>
-<th>Education</th>
-<td>{{ $user->user_meta('education','name',true)??'N/A' }}</td>
+<th>Religion</th>
+<td>{{ $user->user_meta('religion','name',true)??'N/A' }}</td>
 </tr>
 <tr>
-<th>Education</th>
-<td>{{ $user->user_meta('education','name',true)??'N/A' }}</td>
+<th>Marital Status</th>
+<td>{{ $user->user_meta('marital_status','name',true)??'N/A' }}</td>
 </tr>
 <tr>
-<th>Education</th>
-<td>{{ $user->user_meta('education','name',true)??'N/A' }}</td>
+<th>Manglik</th>
+<td>{{ $user->user_meta('manglik','name',true)??'N/A' }}</td>
 </tr>
-<tr>
-<th>Education</th>
+<tr class="hide">
+<th>Address</th>
 <td>{{ $user->user_meta('education','name',true)??'N/A' }}</td>
 </tr>
 @endcomponent
