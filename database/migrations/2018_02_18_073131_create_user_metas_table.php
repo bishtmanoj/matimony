@@ -15,6 +15,9 @@ class CreateUserMetasTable extends Migration
     {
         Schema::create('user_metas', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('user_id');
+            $table->integer('meta_id');
+            $table->enum('meta_key', ['address','education', 'marital_status','religion','caste','manglik']);
             $table->timestamps();
         });
     }

@@ -24,4 +24,28 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function meta(){
+        return $this->hasMany(UserMeta::class);
+    }
+
+    public function user_meta($key = null, $col = null, $parentColumn = false){
+        $userMeta = $this->meta()->where('meta_key', $key)->first();
+
+        if(!$col)
+            return $userMeta;
+
+        if($parentColumn == true)
+            return $userMeta->{$key}->{$col}??'';
+        
+        if($col)
+            return $userMeta->$col??''; 
+        else
+            return $userMeta->{$key}??'';
+
+        
+    }
+    public function education(){
+        return $this->meta()->where('meta_key', 'education')->first();
+    }
 }
