@@ -50,7 +50,6 @@ class ProfileController extends Controller
 
         switch($type):
             case 'other':
-            $type = 'education';
             $request->validate([
                 'education' => 'required',
                 'caste' => 'required',
