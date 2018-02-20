@@ -2,12 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\UserVerification;
 use Illuminate\Http\Request;
 use App\User;
+use Mail;
 
 class RegistrationController extends Controller
 {
     public function signup(){
+
+        $user = User::first();
+
+        Mail::to($user->email)->send(new UserVerification($user));
+        
         return view('sessions.signup');
     }
     public function store(Request $request){
@@ -20,13 +27,15 @@ class RegistrationController extends Controller
             'password_confirmation' => 'required'
         ]);
 
-        User::create([
+        $user = User::create([
             'firstname' => $request->get('firstname'),
             'lastname' => $request->get('lastname'),
             'phone' => $request->get('phone'),
             'email' => $request->get('email'),
             'password' => bcrypt($request->get('password'))
         ]);
+
+        Mail::to($user->email,compact('user'))->send(new UserVerification());
 
         $this->setFlash('success','Your account has been created, please login to continue');
         return redirect()->route('login');

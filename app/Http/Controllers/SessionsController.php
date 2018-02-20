@@ -3,13 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+
 use Auth;
-ini_set('display_errors',1);
-ini_set('display_startup_errors',1);
+use Mail;
+use App\UserReset;
+
 class SessionsController extends Controller
 {
     public function login(){
-
         return view('sessions.login');
     }
 
@@ -35,5 +36,27 @@ class SessionsController extends Controller
         $this->setFlash('success','Logged out successfully.');
 
         return redirect()->route('login');
+    }
+
+    public function email_verification(UserReset $userReset, $uid = null, $rid = null, $token = null){
+        
+        $token = $userReset->findByAttributes([
+            'user_id' => $uid,
+            'id' => $rid, 
+            'token' => $token,
+            'status' => 'unused'
+        ]);
+        
+        if($token):
+            dd($token);
+            $token->user->fill(['email_verified' => 1])->save();
+            $this->setFlash('success','Email verified successfully');
+            $token->fill(['status' => 'expired'])->save();
+        else:
+            $this->setFlash('danger','Invalid verification link');
+        endif;
+
+        return redirect()->route('login');
+
     }
 }

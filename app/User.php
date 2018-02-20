@@ -45,7 +45,18 @@ class User extends Authenticatable
 
         
     }
-    public function education(){
+    /*public function education(){
         return $this->meta()->where('meta_key', 'education')->first();
+    }*/
+    public function resets(){
+        return $this->hasMany(UserReset::class);
+    }
+
+    public function reset_token($type = 'email', $status = 'unused'){
+
+        return $this->resets()->where([
+            'type' => $type,
+            'status' => $status
+            ])->orderBy('created_at','DESC')->first();
     }
 }
