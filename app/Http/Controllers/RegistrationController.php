@@ -11,8 +11,6 @@ class RegistrationController extends Controller
 {
     public function signup(){
 
-        $user = User::first();
-
         return view('sessions.signup');
     }
     public function store(Request $request){
