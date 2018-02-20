@@ -48,7 +48,6 @@ class SessionsController extends Controller
         ]);
         
         if($token):
-            dd($token);
             $token->user->fill(['email_verified' => 1])->save();
             $this->setFlash('success','Email verified successfully');
             $token->fill(['status' => 'expired'])->save();

@@ -13,8 +13,6 @@ class RegistrationController extends Controller
 
         $user = User::first();
 
-        Mail::to($user->email)->send(new UserVerification($user));
-        
         return view('sessions.signup');
     }
     public function store(Request $request){
