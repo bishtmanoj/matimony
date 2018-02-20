@@ -19,7 +19,7 @@ class SessionsController extends Controller
             'email' => 'required|email|exists:users',
             'password' => 'required'
         ]);
-
+      
         if (!Auth::attempt(['email' => $request->get('email'), 'password' => $request->get('password')], $request->get('remember'))):
             $this->setFlash('danger','Invalid credentials given.');
             

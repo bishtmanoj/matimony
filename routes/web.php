@@ -13,10 +13,10 @@
 
 Route::group(['middleware'=>'guest'],function(){
     Route::get('/','SessionsController@login')->name('login');
-    Route::post('/','SessionsController@login')->name('login');
+    Route::post('/','SessionsController@store')->name('login');
 
     Route::get('login','SessionsController@login')->name('login');
-    Route::post('login','SessionsController@store');
+    Route::post('login','SessionsController@store')->name('login');
     
     Route::get('signup','RegistrationController@signup')->name('signup');
     Route::post('signup','RegistrationController@store');

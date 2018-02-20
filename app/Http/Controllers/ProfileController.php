@@ -46,41 +46,40 @@ class ProfileController extends Controller
     public function store(Request $request, $type = 'profile'){
 
         $user = Auth::user();
-
-
+        
         switch($type):
             case 'other':
-            $request->validate([
-                'education' => 'required',
-                'caste' => 'required',
-                'religion' => 'required',
-                'manglik' => 'required',
-                'marital_status' => 'required'
-            ]);
+                $request->validate([
+                    'education' => 'required',
+                    'caste' => 'required',
+                    'religion' => 'required',
+                    'manglik' => 'required',
+                    'marital_status' => 'required'
+                ]);
 
 
-            $metaData = [
-                ['meta_id' => $request->get('education'),'meta_key' => 'education'],
-                ['meta_id' => $request->get('caste'),'meta_key' => 'caste'],
-                ['meta_id' => $request->get('religion'),'meta_key' => 'religion'],
-                ['meta_id' => $request->get('marital_status'),'meta_key' => 'marital_status'],
-                ['meta_id' => $request->get('manglik'),'meta_key' => 'manglik']
-            ];
+                $metaData = [
+                    ['meta_id' => $request->get('education'),'meta_key' => 'education'],
+                    ['meta_id' => $request->get('caste'),'meta_key' => 'caste'],
+                    ['meta_id' => $request->get('religion'),'meta_key' => 'religion'],
+                    ['meta_id' => $request->get('marital_status'),'meta_key' => 'marital_status'],
+                    ['meta_id' => $request->get('manglik'),'meta_key' => 'manglik']
+                ];
 
-            foreach($metaData as $userMeta):
-                if($user->user_meta($userMeta['meta_key']))
-                    $user->user_meta($userMeta['meta_key'])->fill($userMeta)->save();
-                else
-                    $user->meta()->create($userMeta);
-            endforeach;
+                foreach($metaData as $userMeta):
+                    if($user->user_meta($userMeta['meta_key']))
+                        $user->user_meta($userMeta['meta_key'])->fill($userMeta)->save();
+                    else
+                        $user->meta()->create($userMeta);
+                endforeach;
                 break;
             case 'profile':
-            $request->validate([
-                'firstname' => 'required|alpha',
-                'phone' => 'required|digits:10|unique:users,phone,'.$user->id,
-                'email' => 'required|email|unique:users,email,'.$user->id
-            ]);
-            $user->fill($request->only(['firstname','lastname','phone','email']))->save();
+                $request->validate([
+                    'firstname' => 'required|alpha',
+                    'phone' => 'required|digits:10|unique:users,phone,'.$user->id,
+                    'email' => 'required|email|unique:users,email,'.$user->id
+                ]);
+                $user->fill($request->only(['firstname','lastname','phone','email']))->save();
             break;
             default:
             return redirect()->route('profile');
