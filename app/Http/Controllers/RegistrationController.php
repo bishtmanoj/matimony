@@ -33,7 +33,7 @@ class RegistrationController extends Controller
             'password' => bcrypt($request->get('password'))
         ]);
 
-        Mail::to($user->email,compact('user'))->send(new UserVerification());
+        Mail::to($user->email,compact('user'))->send(new UserVerification($user));
 
         $this->setFlash('success','Your account has been created, please login to continue');
         return redirect()->route('login');
