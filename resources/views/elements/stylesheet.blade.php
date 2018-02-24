@@ -6,3 +6,5 @@
 
   <!-- Custom styles for this template -->
   <link href="{{ asset('assets/css/blog.css') }}" rel="stylesheet">
+
+  <link href="{{ asset('assets/css/styles.css') }}">

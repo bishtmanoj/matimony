@@ -32,7 +32,7 @@
     </div>
   </div>
 
-  <div class="container">
+  <div class="container" ng-app="MainApp" ng-controller="MainController" >
 
     <div class="blog-header">
       <h1 class="blog-title"></h1>
@@ -61,7 +61,12 @@
   </div>
   <!-- /.container -->
 
-  @include('elements.footer') @include('elements.javascript') @yield('javascript')
+  @include('elements.footer') 
+  <script type="text/javascript">
+  baseUrl = '{{ url('/') }}';
+  </script>
+  @include('elements.javascript') 
+  @yield('javascript')
 </body>
 
 </html>

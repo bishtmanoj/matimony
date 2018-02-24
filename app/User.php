@@ -53,10 +53,17 @@ class User extends Authenticatable
     }
 
     public function reset_token($type = 'email', $status = 'unused'){
-
         return $this->resets()->where([
             'type' => $type,
             'status' => $status
             ])->orderBy('created_at','DESC')->first();
+    }
+
+    public function scopeSearch($query){
+        return $query->whereNot('user_id', $this->id);
+    }
+
+    public function name(){
+        return $this->firstname.' '.$this->lastname;
     }
 }

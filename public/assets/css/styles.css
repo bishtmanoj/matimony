@@ -1,0 +1,4 @@
+.panel-body.filter-items{
+    max-height: 245px;
+    overflow-y: scroll;
+}

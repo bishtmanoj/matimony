@@ -29,6 +29,8 @@ Route::group(['middleware'=>'auth'],function(){
     Route::get('edit/profile','ProfileController@edit')->name('profile.edit');
     Route::get('edit/{type}','ProfileController@edit')->name('profile.edit');
     Route::post('edit/{type}','ProfileController@store');
-});
+}); 
+
+Route::get('listing','UsersController@index')->name('user.list');
 
 Route::get('verification/email/{uid}/{rid}/{token}','SessionsController@email_verification')->name('sessions.verify.email');
