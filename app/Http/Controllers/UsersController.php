@@ -26,7 +26,7 @@ class UsersController extends Controller
 
       if($request->get('stype') == 'ajax'):
         
-        return User::filter($request->get('data'))->with('meta')->toSql(); 
+        return User::filter($request->get('data'))->with('meta')->paginate(5); 
         endif; 
         return view('users.list',compact('filters','users'));
         

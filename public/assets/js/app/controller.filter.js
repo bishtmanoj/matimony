@@ -20,7 +20,7 @@ app.controller('FilterController', function (api, $scope) {
             'data': $scope.formData.search
         }, 'POST').then(function (response) {
             var response = response.data;
-            if($scope.users.length && type != 'search'){
+            if($scope.users && type != 'search'){
                 $scope.users = $scope.users.concat(response.data);
             } else {
                 $scope.users = response.data;

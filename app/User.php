@@ -54,43 +54,39 @@ class User extends Authenticatable
             if(isset($filter['caste'])){
                 $caste = array_filter($filter['caste'],function($filter){
                     return $filter == true;
-                });   
-                if(!empty($caste)){
-                    $query = $query->whereHas('meta', function ($query) use ($caste){
-                        $query->whereIn('caste_id', $caste);
-                    });
-                }
+                });  
             }
             if(isset($filter['marital_status'])){
                 $marital_status = array_filter($filter['marital_status'],function($filter){
                     return $filter == true;
-                });   
-                if(!empty($marital_status)){
-                    $query =  $query->whereHas('meta', function ($query) use ($marital_status){
-                        $query->whereIn('marital_status_id', $marital_status);
-                    });
-                }
+                });  
             }
             if(isset($filter['manglik'])){
                 $manglik = array_filter($filter['manglik'],function($filter){
                     return $filter == true;
-                });   
-                if(!empty($manglik)){
-                    $query = $query->whereHas('meta', function ($query) use ($manglik){
-                        $query->whereIn('manglik_id', $manglik);
-                    });
-                }
+                }); 
             }
             if(isset($filter['religion'])){
                 $religion = array_filter($filter['religion'],function($filter){
                     return $filter == true;
-                });   
-                if(!empty($religion)){
-                    $query =  $query->whereHas('meta', function ($query) use ($religion){
-                        $query->whereIn('religion_id', $religion);
-                    });
-                }
-            }
+                });
+            }  
+            if(empty($caste) && empty($marital_status) && empty($manglik) && empty($religion))
+                return $query;
+
+            $query = $query->whereHas('meta', function ($query) use ($caste, $marital_status, $manglik, $religion){
+                if(!empty($caste))
+                    $query->whereIn('caste_id', $caste);
+
+                if(!empty($marital_status))
+                    $query->whereIn('marital_status_id', $marital_status);
+
+                if(!empty($manglik))
+                    $query->whereIn('manglik_id', $manglik);
+
+                if(!empty($religion))
+                    $query->whereIn('religion_id', $religion);
+            });
 
             return $query;
     }
