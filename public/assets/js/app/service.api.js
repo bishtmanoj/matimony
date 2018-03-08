@@ -6,7 +6,7 @@ app.factory('api', function ($http) {
                 method: method ? method : 'GET',
                 url: baseUrl + url,
                 data: data,
-                headers: headers | {'Content-Type': 'application/x-www-form-urlencoded'}
+               // headers:  {'Content-Type': 'application/x-www-form-urlencoded'}//headers ?headers: {'Content-Type': 'application/x-www-form-urlencoded'}
             });
         }
     };

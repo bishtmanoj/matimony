@@ -32,5 +32,7 @@ Route::group(['middleware'=>'auth'],function(){
 }); 
 
 Route::get('listing','UsersController@index')->name('user.list');
+Route::post('listing','UsersController@index')->name('user.list');
+Route::get('filters','FiltersController@index')->name('filter.list');
 
 Route::get('verification/email/{uid}/{rid}/{token}','SessionsController@email_verification')->name('sessions.verify.email');

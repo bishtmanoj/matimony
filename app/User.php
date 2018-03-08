@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Carbon\Carbon;
 
 class User extends Authenticatable
 {
@@ -26,44 +27,72 @@ class User extends Authenticatable
     ];
 
     public function meta(){
-        return $this->hasMany(UserMeta::class);
+        return $this->hasOne(UserMeta::class);
     }
 
-    public function user_meta($key = null, $col = null, $parentColumn = false){
-        $userMeta = $this->meta()->where('meta_key', $key)->first();
-
-        if(!$col)
-            return $userMeta;
-
-        if($parentColumn == true)
-            return $userMeta->{$key}->{$col}??'';
-        
-        if($col)
-            return $userMeta->$col??''; 
-        else
-            return $userMeta->{$key}??'';
-
-        
-    }
-    /*public function education(){
-        return $this->meta()->where('meta_key', 'education')->first();
-    }*/
-    public function resets(){
-        return $this->hasMany(UserReset::class);
+    public function castes(){
+        return $this->hasOne(UserMeta::class)->caste;
     }
 
-    public function reset_token($type = 'email', $status = 'unused'){
-        return $this->resets()->where([
-            'type' => $type,
-            'status' => $status
-            ])->orderBy('created_at','DESC')->first();
+    public function getCreatedAtAttribute($value){
+
+        return Carbon::createFromFormat('Y-m-d H:i:s', $value)->diffForHumans();
     }
 
-    public function scopeSearch($query){
-        return $query->whereNot('user_id', $this->id);
+    public function getUpdatedAtAttribute($value){
+
+        return Carbon::createFromFormat('Y-m-d H:i:s', $value)->diffForHumans();
     }
 
-    public function name(){
-        return $this->firstname.' '.$this->lastname;
+    public function scopeFilter($query, $filter = []){
+
+        if(empty($filter))
+            return $query;
+
+            $caste = $marital_status = $manglik = $religion = [];
+
+            if(isset($filter['caste'])){
+                $caste = array_filter($filter['caste'],function($filter){
+                    return $filter == true;
+                });   
+                if(!empty($caste)){
+                    $query = $query->whereHas('meta', function ($query) use ($caste){
+                        $query->whereIn('caste_id', $caste);
+                    });
+                }
+            }
+            if(isset($filter['marital_status'])){
+                $marital_status = array_filter($filter['marital_status'],function($filter){
+                    return $filter == true;
+                });   
+                if(!empty($marital_status)){
+                    $query =  $query->whereHas('meta', function ($query) use ($marital_status){
+                        $query->whereIn('marital_status_id', $marital_status);
+                    });
+                }
+            }
+            if(isset($filter['manglik'])){
+                $manglik = array_filter($filter['manglik'],function($filter){
+                    return $filter == true;
+                });   
+                if(!empty($manglik)){
+                    $query = $query->whereHas('meta', function ($query) use ($manglik){
+                        $query->whereIn('manglik_id', $manglik);
+                    });
+                }
+            }
+            if(isset($filter['religion'])){
+                $religion = array_filter($filter['religion'],function($filter){
+                    return $filter == true;
+                });   
+                if(!empty($religion)){
+                    $query =  $query->whereHas('meta', function ($query) use ($religion){
+                        $query->whereIn('religion_id', $religion);
+                    });
+                }
+            }
+
+            return $query;
     }
+
 }

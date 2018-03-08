@@ -12,7 +12,9 @@ use App\Religion;
 
 class UsersController extends Controller
 {
-    public function index(){
+    public function index(Request $request){
+
+
 
             $filters = [
                 'caste' => ['title' => 'Caste', 'data' => Caste::all()],
@@ -20,8 +22,12 @@ class UsersController extends Controller
                 'marital_status' => ['title' => 'Marital Status', 'data' => MaritalStatus::all()],
                 'religion' => ['title' => 'Religion', 'data' => Religion::all()]
         ];
-        $users = User::paginate(15, ['*'],'user');
-//dd(request()->all());
+
+
+      if($request->get('stype') == 'ajax'):
+        
+        return User::filter($request->get('data'))->with('meta')->toSql(); 
+        endif; 
         return view('users.list',compact('filters','users'));
         
     }
