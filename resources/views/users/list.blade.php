@@ -51,10 +51,10 @@
                             <tbody>
                                 <tr>
                                     <td>25 yrs, 5' 3"</td>
-                                    <td>Never Married</td>
+                                    <td>@{{ user.meta.marital?user.meta.marital.name:'--' }}</td>
                                 </tr>
                                 <tr>
-                                    <td>Hindu, Rajput</td>
+                                    <td>@{{ user.meta.caste?user.meta.caste.name:'--' }}</td>
                                     <td>From Himachal Pradesh, India</td>
                                 </tr>
                                 <tr>

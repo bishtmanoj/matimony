@@ -29,6 +29,8 @@ Route::group(['middleware'=>'auth'],function(){
     Route::get('edit/profile','ProfileController@edit')->name('profile.edit');
     Route::get('edit/{type}','ProfileController@edit')->name('profile.edit');
     Route::post('edit/{type}','ProfileController@store');
+
+    Route::post('profile/uploads','ProfileController@uploads')->name('profile.upload');
 }); 
 
 Route::get('listing','UsersController@index')->name('user.list');

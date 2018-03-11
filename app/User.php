@@ -30,13 +30,9 @@ class User extends Authenticatable
         return $this->hasOne(UserMeta::class);
     }
 
-    public function castes(){
-        return $this->hasOne(UserMeta::class)->caste;
-    }
+    public function galleries(){
 
-    public function getCreatedAtAttribute($value){
-
-        return Carbon::createFromFormat('Y-m-d H:i:s', $value)->diffForHumans();
+        return $this->hasMany(Gallery::class);
     }
 
     public function getUpdatedAtAttribute($value){
@@ -51,26 +47,11 @@ class User extends Authenticatable
 
             $caste = $marital_status = $manglik = $religion = [];
 
-            if(isset($filter['caste'])){
-                $caste = array_filter($filter['caste'],function($filter){
-                    return $filter == true;
-                });  
-            }
-            if(isset($filter['marital_status'])){
-                $marital_status = array_filter($filter['marital_status'],function($filter){
-                    return $filter == true;
-                });  
-            }
-            if(isset($filter['manglik'])){
-                $manglik = array_filter($filter['manglik'],function($filter){
-                    return $filter == true;
-                }); 
-            }
-            if(isset($filter['religion'])){
-                $religion = array_filter($filter['religion'],function($filter){
-                    return $filter == true;
-                });
-            }  
+            $caste = $this->hasFilter($filter,'caste');
+            $marital_status = $this->hasFilter($filter,'marital_status'); 
+            $manglik = $this->hasFilter($filter,'manglik');
+            $religion =  $this->hasFilter($filter,'religion');
+
             if(empty($caste) && empty($marital_status) && empty($manglik) && empty($religion))
                 return $query;
 
@@ -91,4 +72,26 @@ class User extends Authenticatable
             return $query;
     }
 
+    private function hasFilter($data, $key, $items = []){
+
+        if(isset($data[$key])):
+
+            foreach($data[$key] as $itemKey => $item):
+
+                if($item == false)
+                continue;
+
+                $items[] = $itemKey;
+            endforeach;
+
+        endif;
+
+        return $items;
+    }
+
+    public function meta_item($item, $column = 'name'){
+
+        if(isset($this->meta->{$item}->{$column}))
+            return $this->meta->{$item}->{$column};
+    }
 }

@@ -9,10 +9,18 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="description" content="">
     <meta name="title" content="">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title></title>
     <link rel="icon" type="{{ asset('cdn/image/png') }}" href="images/icons/favicon.png">
     <meta name="keywords" content="free bootstrap templates, download free bootstrap themes, html templates, bootstrap themes, fonts, photos,responsive html themes">
-    <meta name="author" content="Chetantech.com"> @include('elements.stylesheet') @yield('stylesheet')
+    <meta name="author" content="Chetantech.com"> 
+    
+    @include('elements.stylesheet') @yield('stylesheet')
+    <style type="text/css">
+    .container {
+    margin-bottom: 25px;
+}
+    </style>
 </head>
 
 <body ng-app="MainApp" ng-controller="MainController">

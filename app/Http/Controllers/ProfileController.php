@@ -10,9 +10,9 @@ use Auth;
 class ProfileController extends Controller
 {
     public function index(){
+        
+        $user = Auth::user()->load('meta.caste','meta.address', 'meta.religion', 'meta.marital', 'meta.education');
 
-        $user = Auth::user();
-        $address = $user->user_meta('address');
         return view('account.main',compact('user','address'));
 
     }
@@ -25,15 +25,16 @@ class ProfileController extends Controller
 
         switch($type):
         case 'other':
-           $data['rows'] = [
-                ['key'=> 'education', 'title' => 'Education', 'content' => Education::all()],
-                ['key'=>'caste','title' => 'Caste', 'content' => Caste::all()],
-                ['key'=>'marital_status','title' => 'Martial Status', 'content' => MaritalStatus::all()],
-                ['key'=>'religion','title' => 'Religion', 'content' => Religion::all()],
-                ['key'=>'manglik', 'title' => 'Manglik', 'content' => Manglik::all()],
-            ];
+           $data['education'] = Education::all();
+           $data['caste'] = Caste::all();
+           $data['marital'] = MaritalStatus::all();
+           $data['religion'] = Religion::all();
+           $data['manglik'] = Manglik::all();
+        
         break;
         case 'profile':
+        break;
+        case 'picture':
         break;
         default:
         return redirect()->route('profile');
@@ -59,20 +60,20 @@ class ProfileController extends Controller
 
 
                 $metaData = [
-                    ['meta_id' => $request->get('education'),'meta_key' => 'education'],
-                    ['meta_id' => $request->get('caste'),'meta_key' => 'caste'],
-                    ['meta_id' => $request->get('religion'),'meta_key' => 'religion'],
-                    ['meta_id' => $request->get('marital_status'),'meta_key' => 'marital_status'],
-                    ['meta_id' => $request->get('manglik'),'meta_key' => 'manglik']
+                    'education_id' => $request->get('education'),
+                    'caste_id' => $request->get('caste'),
+                    'religion_id' => $request->get('religion'),
+                    'marital_status_id' => $request->get('marital_status'),
+                    'manglik_id' => $request->get('manglik')
                 ];
 
-                foreach($metaData as $userMeta):
-                    if($user->user_meta($userMeta['meta_key']))
-                        $user->user_meta($userMeta['meta_key'])->fill($userMeta)->save();
-                    else
-                        $user->meta()->create($userMeta);
-                endforeach;
+                if($usermeta = $user->meta)
+                    $usermeta->fill($metaData)->save();
+                else 
+                    $user->meta()->create($metaData);
+
                 break;
+             
             case 'profile':
                 $request->validate([
                     'firstname' => 'required|alpha',
@@ -92,5 +93,25 @@ class ProfileController extends Controller
         $this->setFlash('success','Profile updated');
 
         return redirect()->route('profile');
+    }
+
+    public function uploads(Request $request){
+
+        $data = $request->image;
+
+
+        list($type, $data) = explode(';', $data);
+        list(, $data)      = explode(',', $data);
+
+        $data = base64_decode($data);
+        $image_name = uniqid('pic-', true).time().'.png';
+        $path = public_path() . "/uploads/profiles/" . $image_name;
+
+        file_put_contents($path, $data);
+        $user = Auth::user();
+
+        $user->fill(['profile_picture' => $image_name])->save();
+        $user->galleries()->create(['name' => $image_name]);
+        return response()->json(['success'=>'done']);
     }
 }

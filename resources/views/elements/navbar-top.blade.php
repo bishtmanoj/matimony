@@ -18,13 +18,13 @@
             </button>
             <div class="clearfix"></div>
         </div>
-        @if(!Auth::check())
+        
         <ul class="nav navbar-nav navbar-right main_nav">
 
             <li class="">
-                <a class="" href="login.php">Help</a>
+                <a class="" href="#">Help</a>
             </li>
-
+            @if(Auth::check())
             <li class="dropdown">
                 <a href="#" id="noti-icon" data-toggle="dropdown" class="dropdown-toggle top-bar-io">
                     <i class="fa fa-bell-o"></i>
@@ -48,53 +48,39 @@
             <li class="dropdown loggedin_user">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
 
-                    <img class="" src="{{ asset('cdn/images/user.png') }}"> John Smith
+                    <img class="" src="{{ asset('uploads/profiles/'.Auth::user()->profile_picture) }}"> {{ Auth::user()->firstname }}
                     <i class="ion-ios-arrow-down"></i>
                 </a>
                 <ul class="dropdown-menu">
                     <li>
-                        <a href="">
+                        <a href="{{ route('profile') }}">
                             <i class="ion-person"></i> My Profile</a>
                     </li>
-                    <li>
-                        <a href="">
-                            <i class="ion-bag"></i> My Shop</a>
-                    </li>
-
-                    <li>
-                        <a href="">
-                            <i class="fa fa-plus-circle"></i> Add Credits</a>
-                    </li>
-
-                    <li>
-                        <a href="">
-                            <i class="ion-cash"></i> Transaction History</a>
-                    </li>
-
-                    <li>
-                        <a href="">
-                            <i class="ion-cash"></i> Payouts</a>
-                    </li>
-                    <li>
-                        <a href="">
-                            <i class="ion-information-circled"></i> Payout Information</a>
-                    </li>
-
+                    
                     <li>
                         <a href="">
                             <i class="ion-ios-locked"></i> Change Password</a>
                     </li>
                     <li class="logout">
-                        <a href="">
+                        <a href="{{ route('logout') }}">
                             <i class="ion-log-out"></i> Logout</a>
                     </li>
                 </ul>
             </li>
 
+            @else 
+            <li class="">
+                <a class="" href="{{ route('login') }}">Login</a>
+            </li>
+            <li class="">
+                <a class="" href="{{ route('signup') }}">Signup</a>
+            </li>
+            @endif
+
         </ul>
 
 
-@endif
+
     </nav>
 </div>
 <!-- Container -->

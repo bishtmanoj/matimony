@@ -24,7 +24,7 @@
 </tr>
 <tr class="hide">
 <th>Address</th>
-<td>{{ $address }}</td>
+<td>{{ $user->address?:'' </td>
 </tr>
 @endcomponent
 @endcomponent

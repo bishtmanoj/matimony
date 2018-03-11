@@ -20,7 +20,7 @@ class UserMeta extends Model
     public function address(){
         return $this->belongsTo(Address::class);
     }
-    public function marital_status(){
-        return $this->belongsTo(MaritalStatus::class);
+    public function marital(){ 
+        return $this->belongsTo(MaritalStatus::class, 'marital_status_id');
     }
 }

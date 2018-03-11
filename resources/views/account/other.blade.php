@@ -6,23 +6,23 @@
 @component('components.table')
 <tr>
 <th>Education</th>
-<td>{{ $user->user_meta('education','name',true)??'N/A' }}</td>
+<td>{{ $user->meta_item('education')??'N/A' }}</td>
 </tr>
 <tr>
 <th>Caste</th>
-<td>{{ $user->user_meta('caste','name',true)??'N/A' }}</td>
+<td>{{ $user->meta_item('caste')??'N/A' }}</td>
 </tr>
 <tr>
 <th>Religion</th>
-<td>{{ $user->user_meta('religion','name',true)??'N/A' }}</td>
+<td>{{ $user->meta_item('religion')??'N/A' }}</td>
 </tr>
 <tr>
 <th>Marital Status</th>
-<td>{{ $user->user_meta('marital_status','name',true)??'N/A' }}</td>
+<td>{{ $user->meta_item('marital')??'N/A' }}</td>
 </tr>
 <tr>
 <th>Manglik</th>
-<td>{{ $user->user_meta('manglik','name',true)??'N/A' }}</td>
+<td>{{ $user->meta_item('manglik')??'N/A' }}</td>
 </tr>
 @endcomponent
 @endcomponent

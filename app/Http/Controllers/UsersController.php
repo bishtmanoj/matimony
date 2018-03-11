@@ -14,21 +14,10 @@ class UsersController extends Controller
 {
     public function index(Request $request){
 
+    if($request->get('stype') == 'ajax')
+        return User::with('meta.caste','meta.address', 'meta.religion', 'meta.marital', 'meta.education')->filter($request->get('data'))->paginate(5); 
 
-
-            $filters = [
-                'caste' => ['title' => 'Caste', 'data' => Caste::all()],
-                'manglik' => ['title' => 'Manglik', 'data' => Manglik::all()],
-                'marital_status' => ['title' => 'Marital Status', 'data' => MaritalStatus::all()],
-                'religion' => ['title' => 'Religion', 'data' => Religion::all()]
-        ];
-
-
-      if($request->get('stype') == 'ajax'):
-        
-        return User::filter($request->get('data'))->with('meta')->paginate(5); 
-        endif; 
-        return view('users.list',compact('filters','users'));
+    return view('users.list');
         
     }
 }

@@ -1,9 +1,9 @@
 @extends('layouts.base') @section('content')
 <div class="row">
-  <div class="col-lg-12">
+  <div class="col-lg-12 text-center">
     <h2 class="my-4">Sign In</h2>
   </div>
-  <div class="col-lg-6">
+  <div class="col-lg-6 col-lg-offset-3">
     <form method="POST" action="">
       {{ csrf_field() }}
       <div class="form-group {{ $errors->has('email')?'has-error':'' }}">
