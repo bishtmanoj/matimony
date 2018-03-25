@@ -4,7 +4,7 @@
     <h2 class="my-4">Sign In</h2>
   </div>
   <div class="col-lg-6 col-lg-offset-3">
-    <form method="POST" action="">
+    <form method="POST" action="" class="form-middle">
       {{ csrf_field() }}
       <div class="form-group {{ $errors->has('email')?'has-error':'' }}">
         <label for="email">Email address</label>

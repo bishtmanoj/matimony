@@ -35,7 +35,6 @@
                         <div class="user-content">
                             <h3 class="user-name">
                                 <a href="#">{{ $user->fullName() }} </a>
-                                <a class="btn btn-sm btn-default" href="{{ route('profile.edit','profile') }}">Edit</a>
                                 <span class="status">
                                     <i class="ion-record"></i> {{ $user->updated_at }}</span>
                             </h3>
@@ -47,15 +46,15 @@
                             @endif
                             <div class="clearfix"></div>
                             <br>
-                            <div class="prod-btns hide">
+                            <div class="prod-btns">
 
-                                <h4>Connect with her? Express interest</h4>
+                                <h4 class="hide">Connect with her? Express interest</h4>
 
-                                <button class="btn btn-primary-outline btn-lg">
-                                    <i class="ion-ios-heart"></i> Show Interest</button>
-                                <button class="btn btn-success btn-lg">Send Message
-                                    <i class="ion-ios-arrow-thin-right"></i>
-                                </button>
+                                <a class="btn btn-primary btn-sm"  href="{{ route('profile.edit','profile') }}">
+                                    <i class="fa fa-pencil"></i> Update Personal Information</a>
+                                <a class="btn btn-default btn-sm" href="{{ route('profile.edit','other') }}">Update Other Information
+                                    <i class="fa fa-pencil"></i>
+</a>
 
                             </div>
 
@@ -81,7 +80,6 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Other Information
 
-                <a class="btn btn-sm btn-default" href="{{ route('profile.edit','other') }}">Edit</a>
                 </div>
                 <div class="panel-body">
 

@@ -15,9 +15,18 @@ class UsersController extends Controller
     public function index(Request $request){
 
     if($request->get('stype') == 'ajax')
-        return User::with('meta.caste','meta.address', 'meta.religion', 'meta.marital', 'meta.education')->filter($request->get('data'))->paginate(5); 
+        return User::with(
+            'meta.caste',
+            'meta.address', 
+            'meta.religion', 
+            'meta.marital', 
+            'meta.education',
+            'meta.height',
+            'meta.employment',
+            'meta.language'
+            )->filter($request->get('data'))->paginate(5); 
 
-    return view('users.list');
+    return view('users.filter');
         
     }
 }
