@@ -3,9 +3,10 @@
     <div class="col-lg-12 text-center">
         <h2 class="my-4">Sign Up</h2>
     </div>
-    <div class="col-lg-6 col-lg-offset-3">
+    <div class="col-lg-12">
         <form method="POST" class="form-middle form-login" action="">
             {{ csrf_field() }}
+            <div class="col-lg-6">
             <div class="form-group {{ $errors->has('username')?'has-error':'' }}">
                 <label for="firstname">First Name</label>
                 <input value="{{ old('firstname') }}" type="text" name="firstname" class="form-control" id="firstname" placeholder="Enter First Name"
@@ -61,6 +62,8 @@
                 <div class="text text-danger">{{ $errors->first('profile_post_for') }}</div>
                 @endif
             </div>
+</div>
+<div class="col-lg-6">
             <div class="form-group {{ $errors->has('phone')?'has-error':'' }}">
                 <label for="lastname">Phone Number</label>
                 <input value="{{ old('phone') }}" type="text" name="phone" class="form-control" id="phone" placeholder="Enter Phone Number"
@@ -89,8 +92,11 @@
                 <div class="text text-danger">{{ $errors->first('password_confirmation') }}</div>
                 @endif
             </div>
-
-            <button type="submit" class="btn btn-primary">Submit</button>
+</div>
+<div class="clearfix"></div>
+<div class="col-lg-12 text-center">
+            <button type="submit" class="btn btn-primary">Sign Up</button>
+</div>
         </form>
     </div>
 </div>
