@@ -561,7 +561,7 @@ ul.yiiPager .selected a{background:#f12148 none repeat scroll 0 0;color:#ffffff;
     background: #fff;
     padding: 48px 0;
 	min-height:300px;
-	margin-bottom: 100px;
+	margin-bottom: 50px;
 }
 .user-banner .container{position:relative;}
 .profile-box{
@@ -571,9 +571,17 @@ ul.yiiPager .selected a{background:#f12148 none repeat scroll 0 0;color:#ffffff;
     width: 100%;
     border-radius: 3px;
 }
-.user-banner .user-thumbnail img{padding:5px;box-shadow:0 0 5px #ccc;    max-height: 100%;}
+.user-banner .user-thumbnail img{padding:5px;  max-height: 100%;}
 /* ====================User Profile ========================== */
 
 
 
 
+.form-middle{background: #fff; padding: 25px;}
+.radio+.radio, .checkbox+.checkbox {
+     margin-top: 10px; 
+}
+.fancy_radio , radio, .checkbox {
+    float: left;
+    margin-left: 17px;
+}

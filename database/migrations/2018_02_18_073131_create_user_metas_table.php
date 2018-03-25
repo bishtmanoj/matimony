@@ -22,6 +22,11 @@ class CreateUserMetasTable extends Migration
             $table->integer('address_id')->nullable();
             $table->integer('education_id')->nullable();
             $table->integer('caste_id')->nullable();
+            $table->integer('user_height_id')->nullable();
+            $table->integer('profile_post_id');
+            $table->integer('employment_id')->nullable();
+            $table->integer('language_id')->nullable();
+            $table->text('about_me')->nullable();
             $table->timestamps();
         });
     }

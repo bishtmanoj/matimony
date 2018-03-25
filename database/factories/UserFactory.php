@@ -19,6 +19,7 @@ $factory->define(App\User::class, function (Faker $faker) {
         'firstname' => $faker->firstName,
         'lastname' => $faker->lastName,
         'email' => $faker->unique()->safeEmail,
+        'date_of_birth' => \Carbon\Carbon::now()->subYears(25),
         //'phone' => '9981'.$faker->randomDigit(6,true),
         'password' => bcrypt('secret')
     ];

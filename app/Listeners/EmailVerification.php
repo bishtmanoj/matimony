@@ -2,7 +2,7 @@
 
 namespace App\Listeners;
 
-use App\Events\EmailVerification;
+use App\Events\EmailVerification as SignupEmailVerification;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
@@ -24,7 +24,7 @@ class EmailVerification
      * @param  EmailVerification  $event
      * @return void
      */
-    public function handle(EmailVerification $event)
+    public function handle(SignupEmailVerification $event)
     {
         //
     }

@@ -29,12 +29,18 @@ class User extends Authenticatable
     public function meta(){
         return $this->hasOne(UserMeta::class);
     }
+    public function resets(){
+        return $this->hasMany(UserReset::class);
+    }
 
     public function galleries(){
 
         return $this->hasMany(Gallery::class);
     }
+    public function setDateOfBirthAtAttribute($value){
 
+        return Carbon::createFromFormat('d-m-Y', $value)->toDateString();
+    }
     public function getUpdatedAtAttribute($value){
 
         return Carbon::createFromFormat('Y-m-d H:i:s', $value)->diffForHumans();
@@ -91,7 +97,18 @@ class User extends Authenticatable
 
     public function meta_item($item, $column = 'name'){
 
+        if($column == false && isset($this->meta->{$item}))
+            return $this->meta->{$item};
+
         if(isset($this->meta->{$item}->{$column}))
             return $this->meta->{$item}->{$column};
+    }
+
+    public function fullName(){
+        return "{$this->firstname} {$this->lastname}";
+    }
+
+    public function age(){
+       return  Carbon::createFromFormat('Y-m-d', $this->date_of_birth)->diffInYears();
     }
 }

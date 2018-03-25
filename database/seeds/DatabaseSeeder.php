@@ -20,5 +20,9 @@ class DatabaseSeeder extends Seeder
         $this->call(MaritalStatusesTableSeeder::class);
         $this->call(ReligionsTableSeeder::class);
         $this->call(ManglikTableSeeder::class);
+        $this->call(ProfilePostsTableSeeder::class);
+        $this->call(EmploymentsTableSeeder::class);
+        $this->call(LanguagesTableSeeder::class);
+        $this->call(UserHeightsTableSeeder::class);
     }
 }

@@ -36,9 +36,8 @@
 
 
         <div class="clearfix"></div>
-        <br>
-        <br>
-        <div class="container">
+   
+        <div class="container has-parent-container">
         @yield('content')
             <!-- -----  ROW END   ---- -->
 
