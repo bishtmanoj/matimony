@@ -1,4 +1,9 @@
-var app = angular.module('MainApp',[]);
+var app = angular.module('MainApp',['ngSanitize']);
+app.filter('unsafe', function($sce) {
+    return function(val) {
+        return $sce.trustAsHtml(val);
+    };
+});
 app.factory('api', function ($http) {
     return {
         request: function (url, data, method, headers) {

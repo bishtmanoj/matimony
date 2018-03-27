@@ -17,12 +17,12 @@ class SessionsController extends Controller
     public function store(Request $request){
 
         $request->validate([
-            'email' => 'required|email|exists:users',
+            'email' => 'required|email',
             'password' => 'required'
         ]);
       
         if (!Auth::attempt(['email' => $request->get('email'), 'password' => $request->get('password')], $request->get('remember'))):
-            $this->setFlash('danger','Invalid credentials given.');
+            $this->setFlash('danger','Invalid Email address or password.');
             
             return redirect()->route('login');
         endif;

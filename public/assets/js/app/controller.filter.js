@@ -1,4 +1,4 @@
-app.controller('FilterController', function (api, $scope) {
+app.controller('FilterController', function (api, $scope, $sce) {
     $scope.users = [];
     $scope.filters = [];
     $scope.formData = [];
@@ -7,27 +7,30 @@ app.controller('FilterController', function (api, $scope) {
     $scope.$parent.overlay = true;
     $scope.hasMore = false;
     $scope.page = 1;
-
+    $scope.loading = true;
     api.request('/filters', {}).then(function (response) {
         $scope.filters = response.data;
         $scope.filterUsers();
     });
 
     $scope.filterUsers = function (type) {
-
+        $scope.loading = true;
         api.request('/listing?page='+$scope.page, {
             stype: 'ajax',
             'data': $scope.formData.search
         }, 'POST').then(function (response) {
+            $scope.loading = false;
             var response = response.data;
             if($scope.users && type != 'search'){
-                $scope.users = $scope.users.concat(response.data);
+               $scope.users = $scope.users.concat($sce.trustAsHtml(response.content));
             } else {
-                $scope.users = response.data;
+                $scope.users = $sce.trustAsHtml(response.content);
             }
+       
             $scope.$parent.overlay = false;
             $scope.page += 1;
-            $scope.hasMore = response.total > $scope.users.length;
+            
+            $scope.hasMore = response.hasMore;
         });
     }
 

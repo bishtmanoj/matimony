@@ -4,6 +4,7 @@
     <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
      <script src="{{asset('assets/js/bootstrap.min.js') }}"></script>
      <script src="{{ asset('assets/vendor/angular.min.js') }}"></script>
+     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-sanitize.js"></script>
      <script src="{{ asset('assets/js/app/service.api.js') }}"></script>
      <script src="{{ asset('assets/js/app/controller.main.js') }}"></script>
 

@@ -38,6 +38,7 @@
         <div class="clearfix"></div>
    
         <div class="container has-parent-container">
+        @include('errors.flash')
         @yield('content')
             <!-- -----  ROW END   ---- -->
 

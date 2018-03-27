@@ -10,7 +10,7 @@
 
                         <div class="user-thumbnail light-bg">
                             <a href="javascript:;">
-                                <img class="img-responsive" src="{{ asset('uploads/profiles/'.Auth::user()->profile_picture)  }}" alt="">
+                                <img class="img-responsive" src="{{ $user->profile_picture_url()  }}" alt="">
                             </a>
                             <!--  <div class="thumbnail-content hover-style1 list-items">    
                                                                <a href="#product-preview" data-toggle="modal" class="btn btn-primary pull-left"> <i class="icon ion-ios-eye-outline"></i> Quick View </a>

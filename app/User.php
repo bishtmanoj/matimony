@@ -111,4 +111,8 @@ class User extends Authenticatable
     public function age(){
        return  Carbon::createFromFormat('Y-m-d', $this->date_of_birth)->diffInYears();
     }
+
+    public function profile_picture_url(){
+        return asset('uploads/profiles/'.$this->profile_picture);
+    }
 }

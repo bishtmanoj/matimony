@@ -17,10 +17,36 @@
             </div>
         </form>
     </aside>
-    <div class="col-md-8 prod-categories">
+    <div class="col-md-8 prod-categories interest-row" ng-controller="InterestsController">
         <h4>Search Result</h4>
+        <div id="filter-listing" ng-bind-html="users"></div> 
+        <div class="row" ng-if="hasMore">
+            <div class="text-center col-md-offset-4">
+                <a class="btn btn-sm btn-default" ng-click="filterUsers()" ng-disabled="overlay">
+                    <span ng-if="overlay">
+                        <i class="fa fa-spin fa-spinner"></i> Loading</span>
+                    <span ng-if="!overlay">Load More</span>
+                </a>
+                <br>
+            </div>
+        </div>
     </div>
-</div>
-@endsection @section('javascript')
-<script src="{{ asset('assets/js/app/controller.filter.js') }}"></script>
-@endsection
+
+
+@if(!Auth::check())
+@include('components.modal')
+@endif
+
+    @endsection @section('javascript')
+    <script src="{{ asset('assets/js/app/controller.filter.js') }}"></script>
+    <script src="{{ asset('assets/js/app/controller.interest.js') }}"></script>
+    <script type="text/javascript">
+    jQuery(function($){
+        $('#filter-listing').delegate('.show-interest','click',function(){
+         var uid = $(this).attr('class').split(' ').reverse()[0].split('-').reverse()[0];
+            $('#login-box').modal();
+            angular.element($('.interest-row')).scope().create({uid:uid});
+        })
+    });
+    </script>
+    @endsection
