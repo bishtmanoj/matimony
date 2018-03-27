@@ -20,11 +20,19 @@ use Auth;
 
 class ProfileController extends Controller
 {
-    public function index(){
-        
-        $user = Auth::user()->load('meta.caste','meta.address', 'meta.religion', 'meta.marital', 'meta.education');
+    public function index($id = null){
+        $viewas = !(Auth::check() && !$id);
 
-        return view('account.profile',compact('user','address'));
+        $user = $viewas? User::find($id):Auth::user();
+
+        if(!$user){
+            $this->setFlash('danger','You must login first');
+            return redirect()->route('login');
+        }
+
+        $user = $user->load('meta.caste','meta.address', 'meta.religion', 'meta.marital', 'meta.education');
+
+        return view('account.profile',compact('user','address','viewas'));
 
     }
 

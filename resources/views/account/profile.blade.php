@@ -1,5 +1,5 @@
 @extends('layouts.base') @section('content')
-<div class="user-banner" style="background:url('{{ asset("cdn/images/bg.jpg") }}')">
+<div class="user-banner" style="background:url('{{ asset(" cdn/images/bg.jpg ") }}')">
     <div class="container">
         <div class="profile-box">
             <div class="row">
@@ -16,10 +16,11 @@
                                                                <a href="#product-preview" data-toggle="modal" class="btn btn-primary pull-left"> <i class="icon ion-ios-eye-outline"></i> Quick View </a>
                                                                <a href="#" class="btn btn-primary pull-right"> <i class="ion-checkmark-round"></i> Sortlist </a>
                                                             </div>  -->
-
-<a class="btn btn-sm btn-default" href="{{ route('profile.edit','picture') }}">Edit</a>
+@if(!$viewas)
+                            <a class="btn btn-sm btn-default" href="{{ route('profile.edit','picture') }}">Edit</a>
+                            @endif
                         </div>
-                        
+
                         <!---- user-thumbnail -->
 
 
@@ -49,13 +50,13 @@
                             <div class="prod-btns">
 
                                 <h4 class="hide">Connect with her? Express interest</h4>
-
-                                <a class="btn btn-primary btn-sm"  href="{{ route('profile.edit','profile') }}">
+                                @if(!$viewas)
+                                <a class="btn btn-primary btn-sm" href="{{ route('profile.edit','profile') }}">
                                     <i class="fa fa-pencil"></i> Update Personal Information</a>
                                 <a class="btn btn-default btn-sm" href="{{ route('profile.edit','other') }}">Update Other Information
                                     <i class="fa fa-pencil"></i>
-</a>
-
+                                </a>
+                                @endif
                             </div>
 
 
