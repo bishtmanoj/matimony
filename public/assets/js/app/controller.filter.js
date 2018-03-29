@@ -1,5 +1,5 @@
 app.controller('FilterController', function (api, $scope, $sce) {
-    $scope.users = [];
+    $scope.users = '';
     $scope.filters = [];
     $scope.formData = [];
 
@@ -22,7 +22,7 @@ app.controller('FilterController', function (api, $scope, $sce) {
             $scope.loading = false;
             var response = response.data;
             if($scope.users && type != 'search'){
-               $scope.users = $scope.users.concat($sce.trustAsHtml(response.content));
+               $scope.users += $sce.trustAsHtml(response.content);// $scope.users.concat($sce.trustAsHtml(response.content));
             } else {
                 $scope.users = $sce.trustAsHtml(response.content);
             }

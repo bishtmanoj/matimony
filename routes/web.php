@@ -31,6 +31,9 @@ Route::group(['middleware'=>'auth'],function(){
     Route::post('edit/{type}','ProfileController@store');
 
     Route::post('profile/uploads','ProfileController@uploads')->name('profile.upload');
+
+    //Interest
+    Route::post('interest/save','InterestController@store')->name('interest.create');
 }); 
 
 Route::get('listing','UsersController@index')->name('user.list');

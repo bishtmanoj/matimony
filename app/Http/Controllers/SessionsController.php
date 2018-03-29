@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Auth;
 use Mail;
 use App\UserReset;
+use Validator;
 
 class SessionsController extends Controller
 {
@@ -17,16 +18,20 @@ class SessionsController extends Controller
     public function store(Request $request){
 
         $request->validate([
-            'email' => 'required|email',
+            'email' => 'required|email|exists:users,email',
             'password' => 'required'
         ]);
       
         if (!Auth::attempt(['email' => $request->get('email'), 'password' => $request->get('password')], $request->get('remember'))):
-            $this->setFlash('danger','Invalid Email address or password.');
-            
+           
+            if($request->get('ltype') == 'ajax')
+            return ['alert' => 'danger','flash' => 'The password is invalid.'];
+
+            $this->setFlash('danger','The password is invalid.');
             return redirect()->route('login');
         endif;
-
+        if($request->get('ltype') == 'ajax')
+        return ['alert' => 'success','flash' => 'Logged in successfully'];
         return redirect()->route('dashboard');
     }
 

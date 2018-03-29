@@ -40,11 +40,14 @@
     @endsection @section('javascript')
     <script src="{{ asset('assets/js/app/controller.filter.js') }}"></script>
     <script src="{{ asset('assets/js/app/controller.interest.js') }}"></script>
+    <script src="{{ asset('assets/js/app/controller.login.js') }}"></script>
     <script type="text/javascript">
     jQuery(function($){
         $('#filter-listing').delegate('.show-interest','click',function(){
          var uid = $(this).attr('class').split(' ').reverse()[0].split('-').reverse()[0];
+         @if(!Auth::check())
             $('#login-box').modal();
+            @endif
             angular.element($('.interest-row')).scope().create({uid:uid});
         })
     });
