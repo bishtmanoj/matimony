@@ -51,8 +51,9 @@
                                                             </div-->
 
                 <div class="prod-btns">
-                    <a  class="btn btn-primary-outline show-interest uid-{{ $user->id }}"> 
-                        <i class="ion-ios-heart"></i> Show Interest
+                    <a  class="btn btn-primary-outline show-interest {{ (Auth::check() && Auth::user()->hasInterest($user->id))?'interested':'' }}"
+                    > 
+                        <i class="ion-ios-heart"></i> <span class="uid-{{ $user->id }}"></span>
                     </a>
                     <a class="btn btn-primary" href="{{ route('profile.viewas',$user->id) }}">View Full Profile
                         <i class="ion-ios-arrow-thin-right"></i>

@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Carbon\Carbon;
+use Auth;
 
 class User extends Authenticatable
 {
@@ -33,6 +34,16 @@ class User extends Authenticatable
         return $this->hasMany(UserReset::class);
     }
 
+    public function interests(){
+
+        return $this->hasMany(Interest::class);
+    }
+
+    public function toInterests(){
+
+        return $this->hasMany(Interest::class,'to_user_id');
+    }
+
     public function galleries(){
 
         return $this->hasMany(Gallery::class);
@@ -47,6 +58,9 @@ class User extends Authenticatable
     }
 
     public function scopeFilter($query, $filter = []){
+
+        if(Auth::check())
+            $query = $query->whereNotIn('id',[Auth::id()]);
 
         if(empty($filter))
             return $query;
@@ -114,5 +128,9 @@ class User extends Authenticatable
 
     public function profile_picture_url(){
         return asset('uploads/profiles/'.$this->profile_picture);
+    }
+
+    public function hasInterest($uid){
+       return $this->interests()->where('to_user_id', $uid)->first();
     }
 }

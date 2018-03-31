@@ -15,7 +15,7 @@ class UsersController extends Controller
     public function index(Request $request, User $user){
 
     if($request->get('stype') == 'ajax'){
-        
+      
         $users = $user->filter($request->get('data'))->paginate(5);
 
         return [

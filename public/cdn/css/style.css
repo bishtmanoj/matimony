@@ -586,3 +586,10 @@ ul.yiiPager .selected a{background:#f12148 none repeat scroll 0 0;color:#ffffff;
     margin-left: 17px;
 }
 .fiterForm .fancy_radio , radio, .checkbox {float: none;}
+
+.show-interest span:after{
+    content:'Show Intrest';
+}
+.show-interest.interested span:after{
+    content:'Remove Intrest';
+}
