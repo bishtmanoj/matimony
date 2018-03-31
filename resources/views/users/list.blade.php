@@ -50,11 +50,18 @@
                                                                 <p>Hello, am glad you are interested in my sister's profile.She has completed her Bachelors.She is a s...More</p>
                                                             </div-->
 
-                <div class="prod-btns">
-                    <a  class="btn btn-primary-outline show-interest {{ (Auth::check() && Auth::user()->hasInterest($user->id))?'interested':'' }}"
+                <div class="prod-btns list-user-action">
+                    @if(Auth::check() && Auth::user()->hasInterest($user->id))
+                    <a  class="btn btn-primary-outline disabled show-interest interested"
+                    > 
+                        <i class="ion-ios-heart"></i> <span></span>
+                    </a>
+                    @else
+                    <a  class="btn btn-primary-outline show-interest "
                     > 
                         <i class="ion-ios-heart"></i> <span class="uid-{{ $user->id }}"></span>
                     </a>
+                    @endif
                     <a class="btn btn-primary" href="{{ route('profile.viewas',$user->id) }}">View Full Profile
                         <i class="ion-ios-arrow-thin-right"></i>
                     </a>

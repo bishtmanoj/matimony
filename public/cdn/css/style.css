@@ -587,9 +587,16 @@ ul.yiiPager .selected a{background:#f12148 none repeat scroll 0 0;color:#ffffff;
 }
 .fiterForm .fancy_radio , radio, .checkbox {float: none;}
 
-.show-interest span:after{
-    content:'Show Intrest';
+.list-user-action .show-interest span:after{
+    content:'Connect'
 }
-.show-interest.interested span:after{
-    content:'Remove Intrest';
+
+.list-user-action .show-interest.interested span:after{
+    content:'Requet Pending';
+}
+.list-user-action .show-interest.interested{
+    cursor: not-allowed;
+    box-shadow: none;
+    opacity: .65;
+    pointer-events: none;
 }

@@ -46,14 +46,10 @@
     <script type="text/javascript">
     jQuery(function($){
         $('#filter-listing').delegate('.show-interest','click',function(){
-           
-            $(this).toggleClass('interested');
-           
-         var uid = $(this).find('span').attr('class').split('-').reverse()[0]; 
             @if(!Auth::check())
             $('#login-box').modal();
             @endif
-            angular.element($('.interest-row')).scope().create('{{ route('interest.create') }}', {uid:uid});
+            angular.element($('.interest-row')).scope().create('{{ route('interest.create') }}', $(this));
         })
     });
     </script>
