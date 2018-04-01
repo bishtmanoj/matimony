@@ -16,7 +16,7 @@
                                                                <a href="#product-preview" data-toggle="modal" class="btn btn-primary pull-left"> <i class="icon ion-ios-eye-outline"></i> Quick View </a>
                                                                <a href="#" class="btn btn-primary pull-right"> <i class="ion-checkmark-round"></i> Sortlist </a>
                                                             </div>  -->
-@if(!$viewas)
+                            @if(!$viewas)
                             <a class="btn btn-sm btn-default" href="{{ route('profile.edit','picture') }}">Edit</a>
                             @endif
                         </div>
@@ -47,10 +47,19 @@
                             @endif
                             <div class="clearfix"></div>
                             <br>
-                            <div class="prod-btns">
-
-                                <h4 class="hide">Connect with her? Express interest</h4>
-                                @if(!$viewas)
+                            <div class="prod-btns interest-row" ng-controller="InterestsController">
+                                @if($viewas) 
+                                @if(UserHelper::hasInterest($user->id))
+                                <h4>Already connected</h4>
+                                @else
+                                <h4 class="">Connect with {{ $user->gender == 'male'?'Him':'Her' }}? Express interest</h4>
+                                @endif
+                                <button class="btn btn-primary-outline btn-lg show-interest {{ UserHelper::hasInterest($user->id)?'interested':'' }}" >
+                                    <i class="ion-ios-heart"></i> <span class="uid-{{ $user->id }}"></span></button>
+                                <button class="btn btn-success btn-lg">Send Message
+                                    <i class="ion-ios-arrow-thin-right"></i>
+                                </button>
+                                @else
                                 <a class="btn btn-primary btn-sm" href="{{ route('profile.edit','profile') }}">
                                     <i class="fa fa-pencil"></i> Update Personal Information</a>
                                 <a class="btn btn-default btn-sm" href="{{ route('profile.edit','other') }}">Update Other Information
@@ -93,7 +102,6 @@
                             <td>{{ $user->meta_item('caste') ??''}}, {{ $user->meta_item('religion') ??''}}</td>
                             <td>@if(($city = $user->meta_item('address', 'city')) && ($state = $user->meta_item('address', 'state')))
                                 From {{ $city }}, {{ $state }} @endif
-
                             </td>
                         </tr>
                         <tr>
@@ -109,38 +117,31 @@
 
 
                     <div class="clearfix"></div>
-
-
-
-
-
-
                 </div>
             </div>
-
-
-
-
-
-
-
-
-
-
-
-
         </aside>
-
-
     </div>
     <!-- -----  ROW END   ---- -->
-
 </div>
+@if(!Auth::check())
+@include('components.modal')
+@endif
 <!-- -----  container  ---- -->
 @endsection @section('javascript')
+<script src="{{ asset('assets/js/app/controller.interest.js') }}"></script>
+@if(!Auth::check())
+    <script src="{{ asset('assets/js/app/controller.login.js') }}"></script>
+    @endif
 <script type="text/javascript">
     jQuery(function () {
         $('.has-parent-container').removeClass('container');
-    })
+        $('.show-interest').on('click',function(){
+            @if(!Auth::check())
+            $('#login-box').modal();
+            return false;
+            @endif
+            angular.element($('.interest-row')).scope().create('{{ route('interest.create') }}', $(this));
+        })
+    });
 </script>
 @endsection

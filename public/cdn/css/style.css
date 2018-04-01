@@ -587,14 +587,14 @@ ul.yiiPager .selected a{background:#f12148 none repeat scroll 0 0;color:#ffffff;
 }
 .fiterForm .fancy_radio , radio, .checkbox {float: none;}
 
-.list-user-action .show-interest span:after{
+.show-interest span:after{
     content:'Connect'
 }
 
-.list-user-action .show-interest.interested span:after{
+.show-interest.interested span:after{
     content:'Requet Pending';
 }
-.list-user-action .show-interest.interested{
+.show-interest.interested{
     cursor: not-allowed;
     box-shadow: none;
     opacity: .65;

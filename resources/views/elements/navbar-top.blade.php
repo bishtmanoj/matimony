@@ -31,8 +31,21 @@
                     <span class="label">Notifications</span>
                     <span id="notify-count" class="badge noti-counts">5</span>
                 </a>
-
-
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="{{ route('profile') }}">
+                            <i class="ion-person"></i> My Profile</a>
+                    </li>
+                    
+                    <li>
+                        <a href="">
+                            <i class="ion-ios-locked"></i> Change Password</a>
+                    </li>
+                    <li class="logout">
+                        <a href="{{ route('logout') }}">
+                            <i class="ion-log-out"></i> Logout</a>
+                    </li>
+                </ul>
             </li>
 
 
@@ -91,17 +104,8 @@
         <nav class="bs-bottom-navbar-collapse">
 
             <ul class="user_nav_ul navbar-nav">
-                <li class="active">
-                    <a href="#">Dashboard</a>
-                </li>
-                <li>
-                    <a href="#">Dashboard</a>
-                </li>
-                <li>
-                    <a href="#">Dashboard</a>
-                </li>
-                <li>
-                    <a href="#">Dashboard</a>
+                <li class="">
+                    <a href="{{ route('user.list') }}">All Users</a>
                 </li>
 
             </ul>

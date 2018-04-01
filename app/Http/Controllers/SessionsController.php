@@ -31,8 +31,8 @@ class SessionsController extends Controller
             return redirect()->route('login');
         endif;
         if($request->get('ltype') == 'ajax')
-        return ['alert' => 'success','flash' => 'Logged in successfully'];
-        return redirect()->route('dashboard');
+        return ['alert' => 'success','flash' => 'Update your information'];
+        return redirect()->route('profile.edit','other');
     }
 
     public function logout(){

@@ -48,6 +48,7 @@
         $('#filter-listing').delegate('.show-interest','click',function(){
             @if(!Auth::check())
             $('#login-box').modal();
+            return false;
             @endif
             angular.element($('.interest-row')).scope().create('{{ route('interest.create') }}', $(this));
         })

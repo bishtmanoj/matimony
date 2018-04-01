@@ -17,6 +17,8 @@ class CreateInterestsTable extends Migration
             $table->increments('id');
             $table->integer('user_id');
             $table->integer('to_user_id');
+            $table->boolean('read')->default(0);
+            $table->enum('status',['pending','declined','accepted'])->default('pending');
             $table->timestamps();
         });
     }

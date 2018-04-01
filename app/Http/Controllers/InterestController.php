@@ -3,9 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Auth;
 
 class InterestController extends Controller
 {
+
+    public function index(){
+        return Auth::check()?Auth::user():[];
+    }
+
     public function store(Request $request){
 
         if($interest = $request->user()->hasInterest($request->get('uid')))
@@ -15,4 +21,5 @@ class InterestController extends Controller
 
         return ['alert' => 'success', 'flash' => 'success'];
     }
+
 }

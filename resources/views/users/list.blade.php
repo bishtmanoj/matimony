@@ -51,7 +51,7 @@
                                                             </div-->
 
                 <div class="prod-btns list-user-action">
-                    @if(Auth::check() && Auth::user()->hasInterest($user->id))
+                    @if(UserHelper::hasInterest($user->id))
                     <a  class="btn btn-primary-outline disabled show-interest interested"
                     > 
                         <i class="ion-ios-heart"></i> <span></span>
