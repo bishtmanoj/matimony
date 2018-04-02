@@ -1,7 +1,9 @@
 @extends('layouts.base') @section('content')
+
 <div class="user-banner" style="background:url('{{ asset(" cdn/images/bg.jpg ") }}')">
     <div class="container">
         <div class="profile-box">
+        
             <div class="row">
 
                 <aside class="col-md-3 col-sm-4">
@@ -17,7 +19,7 @@
                                                                <a href="#" class="btn btn-primary pull-right"> <i class="ion-checkmark-round"></i> Sortlist </a>
                                                             </div>  -->
                             @if(!$viewas)
-                            <a class="btn btn-sm btn-default" href="{{ route('profile.edit','picture') }}">Edit</a>
+                            <a class="btn btn-sm btn-default" data-target="#upload-box" data-toggle="modal">Edit</a>
                             @endif
                         </div>
 
@@ -123,15 +125,24 @@
     </div>
     <!-- -----  ROW END   ---- -->
 </div>
+
 @if(!Auth::check())
 @include('components.modal')
 @endif
+@include('components.upload-picture')
+@section('stylesheet')
+<link rel="stylesheet" href="http://demo.itsolutionstuff.com/plugin/bootstrap-3.min.css">
+  <link rel="stylesheet" href="http://demo.itsolutionstuff.com/plugin/croppie.css">
+@endsection
 <!-- -----  container  ---- -->
 @endsection @section('javascript')
 <script src="{{ asset('assets/js/app/controller.interest.js') }}"></script>
+<script src="{{ asset('assets/js/app/controller.upload.js') }}"></script>
 @if(!Auth::check())
+
     <script src="{{ asset('assets/js/app/controller.login.js') }}"></script>
     @endif
+    <script src="http://demo.itsolutionstuff.com/plugin/croppie.js"></script>
 <script type="text/javascript">
     jQuery(function () {
         $('.has-parent-container').removeClass('container');
@@ -142,6 +153,65 @@
             @endif
             angular.element($('.interest-row')).scope().create('{{ route('interest.create') }}', $(this));
         })
+
+
+        
     });
+</script>
+<script type="text/javascript">
+
+
+$.ajaxSetup({
+headers: {
+    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+}
+});
+
+
+$uploadCrop = $('#upload-demo').croppie({
+    enableExif: true,
+    viewport: {
+        width: 200,
+        height: 200,
+        type: 'circle'
+    },
+    boundary: {
+        width: 300,
+        height: 300
+    }
+});
+
+
+$('#upload').on('change', function () { 
+var reader = new FileReader();
+    reader.onload = function (e) {
+    $uploadCrop.croppie('bind', {
+    url: e.target.result
+    }).then(function(){
+    console.log('jQuery bind complete');
+    });
+    }
+    reader.readAsDataURL(this.files[0]);
+});
+
+
+$('.upload-result').on('click', function (ev) {
+$uploadCrop.croppie('result', {
+type: 'canvas',
+size: 'viewport'
+}).then(function (resp) {
+$.ajax({
+url: "{{ route('profile.upload') }}",
+type: "POST",
+data: {"image":resp},
+success: function (data) {
+html = '<img src="' + resp + '" />';
+$("#upload-demo-i").html(html);
+}
+});
+});
+});
+
+
 </script>
 @endsection

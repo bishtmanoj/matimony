@@ -1,23 +1,46 @@
-app.controller('UploadController', function($scope, api) { alert();
-    $scope.name = 'World';
-    $scope.files = []; 
-    $scope.upload=function(){
+app.directive('fileModel', ['$parse', function ($parse) {
+    return {
+        restrict: 'A',
+        link: function (scope, element, attrs) {
+            var model = $parse(attrs.fileModel);
+            var modelSetter = model.assign;
 
-        var fd = new FormData();
-    fd.append("file", $scope.files);
-    api.request('/offline_upload/file/?file=',fd,
-    {
-        withCredentials: true,
-        headers: {'Content-Type': undefined },
-        transformRequest: angular.identity
-    }, 'POST')
-    .then(function(data)
-    {
-        alert('Done');
-    });
-
-      alert($scope.files.length+" files selected ... Write your Upload Code"); 
-  
+            element.bind('change', function () {
+                scope.$apply(function () {
+                    modelSetter(scope, element[0].files[0]);
+                });
+            });
+        }
     };
-  });
-  
+}]);
+
+app.service('fileUpload', ['$http', function ($http) {
+    this.uploadFileToUrl = function (file, uploadUrl) {
+        var fd = new FormData();
+        fd.append('file', file);
+
+        $http.post(uploadUrl, fd, {
+                transformRequest: angular.identity,
+                headers: {
+                    'Content-Type': undefined
+                }
+            })
+
+            .success(function () {})
+
+            .error(function () {});
+    }
+}]);
+
+app.controller('UploadController', function ($scope, api) {
+    $scope.invalidFile = true;
+    $scope.uploadFile = function () {
+        var file = $scope.file;
+        if (typeof (file) == 'undefined')
+            return false;
+
+            $scope.invalidFile = false;
+        console.log('file is ');
+        console.dir(file);
+    };
+});
