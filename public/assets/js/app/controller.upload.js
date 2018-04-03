@@ -34,13 +34,80 @@ app.service('fileUpload', ['$http', function ($http) {
 
 app.controller('UploadController', function ($scope, api) {
     $scope.invalidFile = true;
-    $scope.uploadFile = function () {
-        var file = $scope.file;
-        if (typeof (file) == 'undefined')
-            return false;
+    $scope.processing = false;
+    $scope.response = {};
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
 
-            $scope.invalidFile = false;
-        console.log('file is ');
-        console.dir(file);
+    $('#upload').on('change', function () {
+        $scope.response = {};
+        if (this.files[0].type.match(/image.*/)) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $uploadCrop.croppie('bind', {
+                    url: e.target.result
+                }).then(function () {});
+            }
+            reader.readAsDataURL(this.files[0]);
+        } else {
+            angular.element("input[type='file']").val(null);
+            $scope.$apply(function () {
+                $scope.response = {alert:'danger','flash':'File type not allowed'};
+            });
+        }
+
+    });
+    $uploadCrop = $('#upload-demo').croppie({
+        enableExif: true,
+        viewport: {
+            width: 200,
+            height: 200,
+            type: 'circle'
+        },
+        boundary: {
+            width: 300,
+            height: 300
+        }
+    });
+
+    $scope.uploadFile = function (url) {
+        $scope.processing = true;
+        var file = $scope.file;
+        if (typeof (file) == 'undefined') {
+            $scope.processing = false;
+            return false;
+        }
+
+        $uploadCrop.croppie('result', {
+            type: 'canvas',
+            size: 'viewport'
+        }).then(function (resp) {
+            $.ajax({
+                url: url,
+                type: "POST",
+                data: {
+                    "image": resp
+                },
+                success: function (data) {
+                    $scope.processing = false;
+                    $scope.file = '';
+                },
+                complete: function (response) {
+
+                    if (JSON.parse(response.responseText).success == 'done') {
+                        window.location.reload();
+                    }
+                    angular.element("input[type='file']").val(null);
+                    $scope.$apply(function () {
+                        $scope.processing = false;
+                    });
+
+                }
+            });
+        });
     };
+
 });
