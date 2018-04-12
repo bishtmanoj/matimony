@@ -61,6 +61,7 @@ app.controller('UploadController', function ($scope, api) {
 
     });
     $uploadCrop = $('#upload-demo').croppie({
+        url: $('input[name="user_pic"]').val(),
         enableExif: true,
         viewport: {
             width: 200,

@@ -133,4 +133,8 @@ class User extends Authenticatable
     public function hasInterest($uid){
        return $this->interests()->where('to_user_id', $uid)->first();
     }
+
+    public function validPassword($password){
+        return \Hash::check($password, $this->password);
+    }
 }

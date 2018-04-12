@@ -34,6 +34,9 @@ Route::group(['middleware'=>'auth'],function(){
 
     //Interest
     Route::post('interest/save','InterestController@store')->name('interest.create');
+
+    Route::get('preferences','PreferenceController@index')->name('preference.list');
+    Route::get('preferences/{type}/edit','PreferenceController@edit')->name('preference.edit');
 }); 
 
 Route::get('listing','UsersController@index')->name('user.list');

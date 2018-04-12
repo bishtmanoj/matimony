@@ -9,6 +9,7 @@
                 <h4 class="modal-title">Upload Profile Picture</h4>
             </div>
             <div class="modal-body">
+            <input type="text" style="display:none;" name="user_pic" value="{{ Auth::user()->profile_picture_url() }}">
                 <div class="row">
                 <div class="col-md-12">
                 <div ng-if="response.alert" class="alert" ng-class="'alert-' + response.alert">@{{ response.flash }}</div>

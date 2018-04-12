@@ -58,6 +58,8 @@ class ProfileController extends Controller
         break;
         case 'picture':
         break;
+        case 'password':
+        break;
         default:
         return redirect()->route('profile');
         break;
@@ -71,6 +73,19 @@ class ProfileController extends Controller
         $user = Auth::user();
         
         switch($type):
+            case 'password':
+                $request->validate([
+                    'current_password' => 'required',
+                    'password' => 'required|confirmed',
+                    'password_confirmation' => 'required' 
+                ]);
+
+                if(!$user->validPassword($request->get('current_password'))):
+                    $this->setFlash('danger','Current password match not found');
+                    return redirect()->back();
+                endif;
+                $user->fill(['password' => bcrypt($request->get('password'))])->save();
+            break;
             case 'other':
 
                 $request->validate([

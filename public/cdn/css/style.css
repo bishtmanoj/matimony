@@ -600,3 +600,4 @@ ul.yiiPager .selected a{background:#f12148 none repeat scroll 0 0;color:#ffffff;
     opacity: .65;
     pointer-events: none;
 }
+.container{margin-top:25px;}

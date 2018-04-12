@@ -38,7 +38,7 @@
                     </li>
                     
                     <li>
-                        <a href="">
+                        <a href="{{ route('profile.edit','password') }}"> 
                             <i class="ion-ios-locked"></i> Change Password</a>
                     </li>
                     <li class="logout">
@@ -71,7 +71,7 @@
                     </li>
                     
                     <li>
-                        <a href="">
+                        <a href="{{ route('profile.edit','password') }}">
                             <i class="ion-ios-locked"></i> Change Password</a>
                     </li>
                     <li class="logout">
@@ -107,6 +107,11 @@
                 <li class="">
                     <a href="{{ route('user.list') }}">All Users</a>
                 </li>
+                @if(Auth::check())
+                <li class="">
+                    <a href="{{ route('preference.list') }}">My Preference</a>
+                </li>
+                @endif
 
             </ul>
         </nav>
