@@ -48,6 +48,30 @@ class User extends Authenticatable
 
         return $this->hasMany(Gallery::class);
     }
+
+    public function preference(){
+        return $this->hasOne(Preference::class);
+    }
+
+    public function getPreference($name, $col = 'name'){
+
+        if(!$this->preference)
+            return null;
+
+        if($name == 'age'):
+            $col = "{$name}_{$col}";
+
+            return $this->preference->{$col};
+        endif;
+
+        if($name == 'country')
+            return $this->preference->{$name}();
+
+        if(!($preference = $this->preference()->with($name)->first()))
+            return null;
+
+       return $preference->{$name}?$preference->{$name}->{$col}:null;
+    }
     public function setDateOfBirthAtAttribute($value){
 
         return Carbon::createFromFormat('d-m-Y', $value)->toDateString();

@@ -1,9 +1,9 @@
 @extends('layouts.base') @section('content')
 
-<div class="user-banner" style="background:url('{{ asset(" cdn/images/bg.jpg ") }}')">
+<div class="user-banner" style="background:url('{{ asset("cdn/images/bg.jpg ") }}')">
     <div class="container">
         <div class="profile-box">
-        
+
             <div class="row">
 
                 <aside class="col-md-3 col-sm-4">
@@ -50,14 +50,15 @@
                             <div class="clearfix"></div>
                             <br>
                             <div class="prod-btns interest-row" ng-controller="InterestsController">
-                                @if($viewas) 
-                                @if(UserHelper::hasInterest($user->id))
+                                @if($viewas) @if(UserHelper::hasInterest($user->id))
                                 <h4>Already connected</h4>
                                 @else
                                 <h4 class="">Connect with {{ $user->gender == 'male'?'Him':'Her' }}? Express interest</h4>
                                 @endif
-                                <button class="btn btn-primary-outline btn-lg show-interest {{ UserHelper::hasInterest($user->id)?'interested':'' }}" >
-                                    <i class="ion-ios-heart"></i> <span class="uid-{{ $user->id }}"></span></button>
+                                <button class="btn btn-primary-outline btn-lg show-interest {{ UserHelper::hasInterest($user->id)?'interested':'' }}">
+                                    <i class="ion-ios-heart"></i>
+                                    <span class="uid-{{ $user->id }}"></span>
+                                </button>
                                 <button class="btn btn-success btn-lg">Send Message
                                     <i class="ion-ios-arrow-thin-right"></i>
                                 </button>
@@ -88,71 +89,124 @@
 <div class="container">
     <div class="row">
         <aside class="col-md-12 col-sm-12">
-
-            <div class="panel panel-default">
-                <div class="panel-heading">Other Information
-
-                </div>
-                <div class="panel-body">
-
-                    <table class="table">
-                        <tr>
-                            <td>{{ $user->age() }} yrs {{ $user->meta_item('height') ??'' }}</td>
-                            <td>{{ $user->meta_item('marital') ??'' }}</td>
-                        </tr>
-                        <tr>
-                            <td>{{ $user->meta_item('caste') ??''}}, {{ $user->meta_item('religion') ??''}}</td>
-                            <td>@if(($city = $user->meta_item('address', 'city')) && ($state = $user->meta_item('address', 'state')))
-                                From {{ $city }}, {{ $state }} @endif
-                            </td>
-                        </tr>
-                        <tr>
-                            <td> {{ $user->meta_item('language') ??'' }}</td>
-                            <td> {{ $user->meta_item('employment') ??'' }}</td>
-                        </tr>
-                    </table>
+            @component('components.panel',[ 'class' => 'primary', 'title' => 'Other Information' ])
 
 
-                    <h4>ABOUT ME</h4>
+            <table class="table">
+                <tr>
+                    <td>{{ $user->age() }} yrs {{ $user->meta_item('height') ??'' }}</td>
+                    <td>{{ $user->meta_item('marital') ??'' }}</td>
+                </tr>
+                <tr>
+                    <td>{{ $user->meta_item('caste') ??''}}, {{ $user->meta_item('religion') ??''}}</td>
+                    <td>@if(($city = $user->meta_item('address', 'city')) && ($state = $user->meta_item('address', 'state')))
+                        From {{ $city }}, {{ $state }} @endif
+                    </td>
+                </tr>
+                <tr>
+                    <td> {{ $user->meta_item('language') ??'' }}</td>
+                    <td> {{ $user->meta_item('employment') ??'' }}</td>
+                </tr>
+            </table>
 
-                    <p>{{ $user->meta_item('about_me', false) }}</p>
+
+            <h4>ABOUT ME</h4>
+
+            <p>{{ $user->meta_item('about_me', false) }}</p>
 
 
-                    <div class="clearfix"></div>
-                </div>
-            </div>
+            <div class="clearfix"></div>
+            @endcomponent
         </aside>
     </div>
     <!-- -----  ROW END   ---- -->
+    <div class="row">
+        <div class="col-md-12">
+            @component('components.panel',[ 'class' => 'primary', 'title' => 'Partner Preferences' ])
+            <table class="table table-hover">
+                <tr>
+                    <th>Age</th>
+                    <td>@if(($ageFrom = $user->getPreference('age','from')) && ($ageTo = $user->getPreference('age','to'))) {{
+                        $ageFrom }} - {{ $ageTo }} Years @endif
+                    </td>
+                    <th>Mother Tongue</th>
+                    <td>{{ $user->getPreference('language')??'' }}</td>
+                </tr>
+                <tr>
+                    <th>Marital Status</th>
+                    <td>{{ $user->getPreference('maritalStatus')??'' }}</td>
+                    <th>Height</th>
+                    <td>{{$user->getPreference('height')??''}}</td>
+                </tr>
+                <tr>
+                    <th>Religion/Community</th>
+                    <td colspan="3">{{ $user->getPreference('religion')??''}}</td>
+                </tr>
+            </table>
+            <h4>Location Details </h4>
+            <table class="table table-hover">
+                <tr>
+                    <th>Country living in</th>
+                    <td>{{ $user->getPreference('country','country')??''}}</td>
+                    <th>State living in</th>
+                    <td>{{ $user->getPreference('state','state')??'' }}</td>
+                </tr>
+                <tr>
+                    <th>City/District </th>
+                    <td>{{$user->getPreference('city','city')??''}}</td>
+                    <th></th>
+                    <td></td>
+                </tr>
+            </table>
+            <h4>Education & Career </h4>
+            <table class="table table-hover">
+                <tr>
+                    <th>Education</th>
+                    <td>{{ $user->getPreference('education')??'' }}</td>
+                    <th>Working</th>
+                    <td>{{ $user->getPreference('employment')??'' }}</td>
+                </tr>
+                <tr style="display:none;">
+                    <th>Professional Area</th>
+                    <td></td>
+                    <th>Anual Income</th>
+                    <td></td>
+                </tr>
+            </table>
+
+            <h4>Other Information</h4>
+            <table class="table table-hover">
+                <tr>
+                    <th>Profile Created By</th>
+                    <td>{{ $user->getPreference('profileBy')??'' }}</td>
+                </tr>
+            </table>
+            @endcomponent
+        </div>
+    </div>
 </div>
 
-@if(!Auth::check())
-@include('components.modal')
-@endif
-@include('components.upload-picture')
-@section('stylesheet')
+@if(!Auth::check()) @include('components.modal') @endif @include('components.upload-picture') @section('stylesheet')
 <link rel="stylesheet" href="http://demo.itsolutionstuff.com/plugin/bootstrap-3.min.css">
-  <link rel="stylesheet" href="http://demo.itsolutionstuff.com/plugin/croppie.css">
-@endsection
+<link rel="stylesheet" href="http://demo.itsolutionstuff.com/plugin/croppie.css"> @endsection
 <!-- -----  container  ---- -->
 @endsection @section('javascript')
 <script src="{{ asset('assets/js/app/controller.interest.js') }}"></script>
 <script src="{{ asset('assets/js/app/controller.upload.js') }}"></script>
 @if(!Auth::check())
 
-    <script src="{{ asset('assets/js/app/controller.login.js') }}"></script>
-    @endif
-    <script src="http://demo.itsolutionstuff.com/plugin/croppie.js"></script>
+<script src="{{ asset('assets/js/app/controller.login.js') }}"></script>
+@endif
+<script src="http://demo.itsolutionstuff.com/plugin/croppie.js"></script>
 <script type="text/javascript">
     jQuery(function () {
         $('.has-parent-container').removeClass('container');
-        $('.show-interest').on('click',function(){
+        $('.show-interest').on('click', function () {
             @if(!Auth::check())
             $('#login-box').modal();
             return false;
             @endif
-            angular.element($('.interest-row')).scope().create('{{ route('interest.create') }}', $(this));
-        })  
+            angular.element($('.interest-row')).scope().create('{{ route('interest.create') }}', $(this));       })
     });
 </script>
 @endsection

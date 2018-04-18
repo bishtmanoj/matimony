@@ -6,32 +6,35 @@
         <table class="table table-hover">
             <tr>
                 <th>Age</th>
-                <td></td>
+                <td>@if(($ageFrom = $user->getPreference('age','from')) && ($ageTo = $user->getPreference('age','to')))
+                
+                {{ $ageFrom }} - {{ $ageTo }} Years
+                @endif</td>
                 <th>Mother Tongue</th>
-                <td></td>
+                <td>{{ $user->getPreference('language')??'' }}</td>
             </tr>
             <tr>
                 <th>Marital Status</th>
-                <td></td>
+                <td>{{ $user->getPreference('maritalStatus')??'' }}</td>
                 <th>Height</th>
-                <td></td>
+                <td>{{$user->getPreference('height')??''}}</td>
             </tr>
             <tr>
                 <th>Religion/Community</th>
-                <td colspan="3"></td>
+                <td colspan="3">{{ $user->getPreference('religion')??''}}</td>
             </tr>
         </table>
         <h4>Location Details <a class="pull-right btn"  ng-click="edit($event)" href="{{ route('preference.edit','location') }}" id="location">Edit</a></h4>
         <table class="table table-hover">
             <tr>
                 <th>Country living in</th>
-                <td></td>
+                <td>{{ $user->getPreference('country','country')??''}}</td>
                 <th>State living in</th>
-                <td></td>
+                <td>{{ $user->getPreference('state','state')??'' }}</td>
             </tr>
             <tr>
                 <th>City/District </th>
-                <td></td>
+                <td>{{$user->getPreference('city','city')??''}}</td>
                 <th></th>
                 <td></td>
             </tr>
@@ -40,11 +43,11 @@
         <table class="table table-hover">
             <tr>
                 <th>Education</th>
-                <td></td>
-                <th>Working With</th>
-                <td></td>
+                <td>{{ $user->getPreference('education')??'' }}</td>
+                <th>Working</th>
+                <td>{{ $user->getPreference('employment')??'' }}</td>
             </tr>
-            <tr>
+            <tr style="display:none;">
                 <th>Professional Area</th>
                 <td></td>
                 <th>Anual Income</th>
@@ -56,7 +59,7 @@
         <table class="table table-hover">
             <tr>
                 <th>Profile Created By</th>
-                <td></td>
+                <td>{{ $user->getPreference('profileBy')??'' }}</td>
             </tr>
         </table>
         @endcomponent

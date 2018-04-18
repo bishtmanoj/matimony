@@ -111,6 +111,9 @@
                 <li class="">
                     <a href="{{ route('preference.list') }}">My Preference</a>
                 </li>
+                <li class="">
+                    <a href="{{ route('interest.list','sent') }}">Interests Sent</a>
+                </li>
                 @endif
 
             </ul>
