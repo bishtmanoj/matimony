@@ -18,16 +18,23 @@
 <tr>
 <td>
 @if($type == 'sent')
-{{ $interest->sentBy->fullName() }} 
+{{ $interest->sentTo->fullName() }} 
 @else 
-{{ $interest->sentTo->fullName() }}
+{{ $interest->sentBy->fullName() }}
 @endif
 </td>
 <td>{{ ucfirst($interest->status) }}</td>
 <td>{{ $interest->created_at->diffForHumans() }}</td>
 @if($type == 'received')
-<td><a class="btn btn-primary" href="{{ route('interest.action',[$interest->id, 'accept']) }}">Accept</a>&nbsp;&nbsp;
+
+<td>
+@if($interest->status == 'pending')
+<a class="btn btn-primary" href="{{ route('interest.action',[$interest->id, 'accept']) }}">Accept</a>&nbsp;&nbsp;
 <a class="btn btn-default" href="{{ route('interest.action',[$interest->id, 'decline']) }}">Decline</a>
+@else 
+<a class="btn btn-info disabled">{{ ucfirst($interest->status) }}</a>&nbsp;&nbsp;
+<a href="{{ route('profile.viewas',$interest->user_id) }}" class="btn btn-default">View Profile</a>
+@endif
 </td>
 @endif
 </tr>
