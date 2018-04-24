@@ -111,9 +111,21 @@
                 <li class="">
                     <a href="{{ route('preference.list') }}">My Preference</a>
                 </li>
+
+                <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                Interests</a>
+                <ul class="dropdown-menu">
                 <li class="">
                     <a href="{{ route('interest.list','sent') }}">Interests Sent</a>
                 </li>
+                    
+                <li class="">
+                    <a href="{{ route('interest.list','received') }}">Interests Received</a>
+                </li>
+                </ul>
+                </li>
+                
                 @endif
 
             </ul>
